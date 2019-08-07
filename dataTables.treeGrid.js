@@ -126,13 +126,13 @@
                 var td = $(dataTable.cell(getParentTd(e.target)).node());
                 var paddingLeft = parseInt(td.css('padding-left'), 10);
                 var layer = parseInt(td.find('span').css('margin-left') || 0, 10) / sLeft;
+
+                if (data.children && data.children.length) {
+
                 var icon = collapseIcon.clone();
                 icon.css('marginLeft', layer * sLeft + 'px');
                 td.removeClass('treegrid-control').addClass('treegrid-control-open');
-                
-
-                if (data.children && data.children.length) {
-                    td.html('').append(icon);
+                td.html('').append(icon);
                     var subRows = treeGridRows[parentTrId] = [];
                     var prevRow = row.node();
                     data.children.forEach(function (item) {
@@ -152,8 +152,7 @@
                     select && setTimeout(function () {
                         dataTable.rows(selectedIndexes).select();
                     }, 0);
-                }                         
-
+                }
             });
 
             // Collapse TreeGrid
@@ -165,14 +164,14 @@
                 var parentTrId = $(parentTr).attr('tg-id');
                 var td = $(dataTable.cell(getParentTd(e.target)).node());
                 var layer = parseInt(td.find('span').css('margin-left') || 0, 10) / sLeft;
-                var icon = expandIcon.clone();
-                icon.css('marginLeft', layer * sLeft + 'px');
-                td.removeClass('treegrid-control-open').addClass('treegrid-control');
-                var data = row.data();
-                if (data.children && data.children.length) {
-                td.html('').append(icon);
-                }
+                
+                 if ( typeof row === "undefined"){
 
+                    var icon = expandIcon.clone();
+                    icon.css('marginLeft', layer * sLeft + 'px');
+                    td.removeClass('treegrid-control-open').addClass('treegrid-control');
+                    td.html('').append(icon);
+                }
                 resetTreeGridRows(parentTrId);
                 resetEvenOddClass(dataTable);
 
